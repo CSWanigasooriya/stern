@@ -31,7 +31,7 @@ public class UserController {
     }
 
     @PostMapping(path = "user", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<UserEntity> create(@RequestBody UserEntity newUser) {
+    public ResponseEntity<UserEntity> save(@RequestBody UserEntity newUser) {
         UserEntity user = userRepository.save(newUser);
         return new ResponseEntity<>(user, HttpStatus.CREATED);
     }

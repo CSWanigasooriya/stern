@@ -19,27 +19,27 @@ public class FirestoreUserController extends BaseController {
     }
 
     @GetMapping("/users")
-    public List<FirebaseUser> getAllUsers() throws ExecutionException, InterruptedException {
+    public List<FirebaseUser> getAll() throws ExecutionException, InterruptedException {
         return firebaseUserService.getAllUsers();
     }
 
     @GetMapping("/user/{uid}")
-    public FirebaseUser getUser(@PathVariable String uid) throws InterruptedException, ExecutionException {
+    public FirebaseUser getById(@PathVariable String uid) throws InterruptedException, ExecutionException {
         return firebaseUserService.getUser(uid);
     }
 
     @PostMapping("/user")
-    public String createUser(@RequestBody FirebaseUser firebaseUser) throws InterruptedException, ExecutionException {
+    public String save(@RequestBody FirebaseUser firebaseUser) throws InterruptedException, ExecutionException {
         return firebaseUserService.saveUser(firebaseUser);
     }
 
     @PutMapping("/user")
-    public String updateUser(@RequestBody FirebaseUser firebaseUser) throws InterruptedException, ExecutionException {
+    public String update(@RequestBody FirebaseUser firebaseUser) throws InterruptedException, ExecutionException {
         return firebaseUserService.updatePatientDetails(firebaseUser);
     }
 
     @DeleteMapping("/user/{uid}")
-    public String deleteUser(@PathVariable String uid) throws ExecutionException, InterruptedException {
+    public String delete(@PathVariable String uid) throws ExecutionException, InterruptedException {
         return firebaseUserService.deleteUser(uid);
     }
 }

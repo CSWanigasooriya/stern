@@ -1,4 +1,4 @@
-package com.flaze.stern.models.firebase;
+package com.flaze.stern.models.firestore;
 
 import lombok.Data;
 

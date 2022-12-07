@@ -1,4 +1,4 @@
-package com.flaze.stern.controllers;
+package com.flaze.stern.controllers.sql;
 
 import com.flaze.stern.models.entities.UserEntity;
 import com.flaze.stern.repositories.UserEntityRepository;
@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@RequestMapping("/sql")
 public class UserController {
     private final UserEntityRepository userRepository;
 
@@ -23,13 +24,13 @@ public class UserController {
         return new ResponseEntity<>(userRepository.findAll(), HttpStatus.OK);
     }
 
-    @GetMapping("users/{uid}")
+    @GetMapping("user/{uid}")
     public ResponseEntity<UserEntity> getById(@PathVariable String uid) {
         Optional<UserEntity> user = userRepository.findById(uid);
         return user.map(userEntity -> new ResponseEntity<>(userEntity, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    @PostMapping(path = "users", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(path = "user", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<UserEntity> create(@RequestBody UserEntity newUser) {
         UserEntity user = userRepository.save(newUser);
         return new ResponseEntity<>(user, HttpStatus.CREATED);

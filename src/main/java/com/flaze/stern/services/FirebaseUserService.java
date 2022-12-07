@@ -1,17 +1,18 @@
 package com.flaze.stern.services;
 
-import com.flaze.stern.models.firebase.FirebaseUser;
+import com.flaze.stern.models.firestore.FirebaseUser;
 import com.google.api.core.ApiFuture;
-import com.google.cloud.firestore.DocumentReference;
-import com.google.cloud.firestore.DocumentSnapshot;
-import com.google.cloud.firestore.Firestore;
-import com.google.cloud.firestore.WriteResult;
+import com.google.cloud.firestore.*;
 import com.google.firebase.cloud.FirestoreClient;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 @Service
+@Slf4j
 public class FirebaseUserService {
 
     public static final String COLLECTION_NAME = "users";
@@ -20,6 +21,19 @@ public class FirebaseUserService {
         Firestore dbFirestore = FirestoreClient.getFirestore();
         ApiFuture<WriteResult> collectionsApiFuture = dbFirestore.collection(COLLECTION_NAME).document(firebaseUser.getUid()).set(firebaseUser);
         return collectionsApiFuture.get().getUpdateTime().toString();
+    }
+
+    public List<FirebaseUser> getAllUsers() throws ExecutionException, InterruptedException {
+        List<FirebaseUser> firebaseUsers = new ArrayList<>();
+        Firestore dbFirestore = FirestoreClient.getFirestore();
+        ApiFuture<QuerySnapshot> query = dbFirestore.collection(COLLECTION_NAME).get();
+        QuerySnapshot querySnapshot = query.get();
+        List<QueryDocumentSnapshot> documents = querySnapshot.getDocuments();
+        for (QueryDocumentSnapshot document : documents) {
+            FirebaseUser firebaseUser = document.toObject(FirebaseUser.class);
+            firebaseUsers.add(firebaseUser);
+        }
+        return firebaseUsers;
     }
 
     public FirebaseUser getUser(String uid) throws InterruptedException, ExecutionException {

@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public abstract class BaseController {
+public class BaseController {
     @RequestMapping("/")
     public @ResponseBody String greeting() {
         return "Welcome to STERN";

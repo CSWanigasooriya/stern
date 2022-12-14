@@ -1,5 +1,6 @@
 package com.flaze.stern.controllers.sql;
 
+import com.flaze.stern.controllers.BaseController;
 import com.flaze.stern.models.entities.UserEntity;
 import com.flaze.stern.repositories.UserEntityRepository;
 import org.springframework.http.HttpStatus;
@@ -12,7 +13,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/sql")
-public class UserController {
+public class UserController extends BaseController {
     private final UserEntityRepository userRepository;
 
     public UserController(UserEntityRepository userRepository) {
